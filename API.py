@@ -1,14 +1,22 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
+from flask_classful import FlaskView, route
 from TextDetector import TextDetector
 
-detector = TextDetector()
-api = Flask(__name__)
 
+class APIView(FlaskView):
 
-@api.route('/', methods=['GET'])
-def get_text():
-    return jsonify(text=detector.detect_text())
+    def __init__(self):
+        self.text = 'Text in image have not been detected yet'
+        self.detector = TextDetector()
+
+    @route('/', methods=['GET', 'POST'])
+    def get_text(self):
+        if request.method == 'POST':
+            self.text = self.detector.detect_text()
+        return jsonify({"text": self.text})
 
 
 if __name__ == '__main__':
-    api.run()
+    app = Flask(__name__)
+    APIView.register(app)
+    app.run()

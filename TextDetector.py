@@ -6,7 +6,7 @@ class TextDetector:
     pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
     def detect_text(self):
-        img = cv2.imread(r".\1.png")
+        img = cv2.imread(r".\1.tif")
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         words = pytesseract.image_to_data(img)
         # print(words)
