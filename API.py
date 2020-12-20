@@ -10,7 +10,7 @@ class APIView(FlaskView):
         self.detector = TextDetector()
 
     @route('/', methods=['GET', 'POST'])
-    def get_text(self):
+    def handle_text(self):
         if request.method == 'POST':
             self.text = self.detector.detect_text()
         return jsonify({"text": self.text})
